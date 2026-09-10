@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ru" data-region="ua">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>SpectSearch</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23e08a1e'/><text x='16' y='22' text-anchor='middle' font-size='18' font-family='Space Grotesk,sans-serif' font-weight='700' fill='white'>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css?v=31">
+  <link rel="stylesheet" href="/static/motion.css?v=31">
+</head>
+<body>
+
+<div id="splash" class="splash" aria-live="polite" aria-label="Загрузка">
+  <div class="splash__logo">Spect<span>Search</span></div>
+  <div class="splash__tagline" id="splashTagline">Контролируйте цены умнее</div>
+  <div class="splash__dots" id="splashDots" aria-hidden="true">
+    <div class="splash__dot"></div>
+    <div class="splash__dot"></div>
+    <div class="splash__dot"></div>
+  </div>
+</div>
+
+<div id="auth" class="auth" hidden>
+  <div class="auth-deco auth-deco--leaf1" aria-hidden="true"></div>
+  <div class="auth-deco auth-deco--leaf2" aria-hidden="true"></div>
+  <div class="auth-deco auth-deco--circle" aria-hidden="true"></div>
+  <div class="auth-box">
+    <div class="brand">Spect<span>Search</span></div>
+    <p class="muted" data-i18n="auth.tagline">Контролируйте цены умнее</p>
+    <form id="authForm">
+      <h2 id="authTitle" data-i18n="auth.login">Вход в аккаунт</h2>
+      <div id="authMessage" class="auth-message" data-i18n="auth.loginHint">Войдите, чтобы продолжить</div>
+      <input id="authName" placeholder="Ваше имя" hidden>
+      <input id="authEmail" type="email" placeholder="Email" autocomplete="email" required>
+      <input id="authPassword" type="password" placeholder="Пароль" autocomplete="current-password" required>
+      <button id="authSubmit" class="primary" type="submit" data-i18n="auth.continue">Продолжить</button>
+      <button type="button" id="authSwitch" class="link" data-i18n="auth.createAccount">Создать аккаунт</button>
+      <small id="authError"></small>
+    </form>
+    <div class="demo-hint">Demo: demo@example.com / demo123</div>
+  </div>
+</div>
+
+<div id="app" hidden>
+
+  <aside>
+    <div class="brand">Spect<span>Search</span></div>
+    <nav>
+      <button data-view="overview" class="selected">
+        <span class="nav-icon">▦</span><span data-i18n="nav.overview">Обзор</span>
+      </button>
+      <button data-view="products">
+        <span class="nav-icon">◫</span><span data-i18n="nav.products">Мои товары</span>
+      </button>
+      <button data-view="favorites">
+        <span class="nav-icon">☆</span><span data-i18n="nav.favorites">Избранное</span>
+      </button>
+      <button data-view="alerts">
+        <span class="nav-icon">♧</span><span data-i18n="nav.alerts">Уведомления</span>
+      </button>
+      <button data-view="logs">
+        <span class="nav-icon">◎</span><span data-i18n="nav.logs">Журнал цен</span>
+      </button>
+    </nav>
+    <div class="aside-bottom">
+      <button id="logout" type="button">
+        <span class="nav-icon">↪</span><span data-i18n="nav.logout">Выйти</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="content">
+    <header>
+      <div class="header-left">
+        <b id="pageTitle" data-i18n="nav.overview">Обзор</b>
+        <p><span data-i18n="header.welcome">Добро пожаловать,</span> <span id="userName"></span></p>
+      </div>
+      <div class="header-actions">
+        <button id="refresh" type="button" title="Обновить" aria-label="Обновить">↻</button>
+        <button class="primary" id="add" type="button" data-i18n="action.add">+ Добавить товар</button>
+        <button class="avatar-btn" id="avatarBtn" type="button" aria-label="Профиль"
+          aria-haspopup="true" aria-expanded="false">
+          <div class="avatar" id="avatar"></div>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section id="overview" class="view">
+        <div class="headline">
+          <div>
+            <span class="eyebrow" data-i18n="overview.eyebrow">АНАЛИТИКА РЫНКА</span>
+            <h1 data-i18n="overview.title">Цены под контролем</h1>
+            <p data-i18n="overview.subtitle">Следите за рынком, находите лучшие предложения и покупайте в нужный момент.</p>
+          </div>
+          <div class="trend">
+            ↗ <b id="statFired">0</b>
+            <small data-i18n="overview.fired">сработавших алертов</small>
+          </div>
+        </div>
+        <div class="stats">
+          <div><span data-i18n="stats.products">ТОВАРОВ</span><b id="statProducts">0</b><i data-i18n="stats.productsSub">↗ в базе</i></div>
+          <div><span data-i18n="stats.tracked">ОТСЛЕЖИВАЮ</span><b id="statTracked">0</b><i data-i18n="stats.trackedSub">☆ в избранном</i></div>
+          <div><span data-i18n="stats.alerts">АЛЕРТОВ</span><b id="statAlerts">0</b><i data-i18n="stats.alertsSub">♧ активных</i></div>
+          <div><span data-i18n="stats.updates">ОБНОВЛЕНИЙ</span><b id="statUpdates">0</b><i data-i18n="stats.updatesSub">◷ за 24 часа</i></div>
+        </div>
+        <div class="section-head">
+          <div>
+            <h2 data-i18n="overview.popular">Популярные товары</h2>
+            <p data-i18n="overview.popularSub">Лучшие предложения прямо сейчас</p>
+          </div>
+          <button class="link" type="button" data-view="products" data-i18n="overview.seeAll">Смотреть все →</button>
+        </div>
+        <div id="popular" class="cards"></div>
+      </section>
+
+      <section id="products" class="view" hidden>
+        <div class="section-head">
+          <div>
+            <h1 data-i18n="nav.products">Мои товары</h1>
+            <p data-i18n="products.sub">Все товары для мониторинга</p>
+          </div>
+          <button class="primary" id="add2" type="button" data-i18n="action.add">+ Добавить товар</button>
+        </div>
+        <div class="filters">
+          <div class="filter-search">
+            <input id="search" placeholder="Поиск по названию…" data-i18n-ph="filters.search">
+          </div>
+          <select id="category">
+            <option value="" data-i18n="filters.allCats">Все категории</option>
+            <option value="Смартфони">Смартфони</option>
+            <option value="Ноутбуки">Ноутбуки</option>
+            <option value="Навушники">Навушники</option>
+            <option value="Планшети">Планшети</option>
+            <option value="Телевізори">Телевізори</option>
+            <option value="Інше">Інше</option>
+          </select>
+        </div>
+        <div id="allProducts" class="cards"></div>
+      </section>
+
+      <section id="favorites" class="view" hidden>
+        <div class="section-head">
+          <div><h1 data-i18n="nav.favorites">Избранное</h1><p data-i18n="favs.sub">Товары, за которыми вы следите</p></div>
+        </div>
+        <div id="favoriteProducts" class="cards"></div>
+      </section>
+
+      <section id="alerts" class="view" hidden>
+        <div class="section-head">
+          <div><h1 data-i18n="nav.alerts">Уведомления</h1><p data-i18n="alerts.sub">Следите за снижением цен автоматически</p></div>
+        </div>
+        <div id="alertList" class="alert-list"></div>
+      </section>
+
+      <section id="logs" class="view" hidden>
+        <div class="section-head">
+          <div><h1 data-i18n="nav.logs">Журнал цен</h1><p data-i18n="logs.sub">Каждое изменение цены фиксируется здесь</p></div>
+          <button class="ghost" id="logsRefresh" type="button" data-i18n="action.refresh">↻ Обновить</button>
+        </div>
+        <div class="logs-filters">
+          <select id="logsProductFilter">
+            <option value="" data-i18n="logs.allProducts">Все товары</option>
+          </select>
+          <select id="logsSourceFilter">
+            <option value="" data-i18n="logs.allSources">Все источники</option>
+            <option value="scheduler" data-i18n="logs.scheduler">Планировщик</option>
+            <option value="manual"    data-i18n="logs.manual">Вручную</option>
+            <option value="parse"     data-i18n="logs.parse">Парсинг</option>
+          </select>
+        </div>
+        <div id="logsList" class="logs-list"></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div id="productPage" class="product-page" hidden aria-label="Страница товара"></div>
+
+<div id="profilePopup" class="profile-popup" hidden role="dialog" aria-modal="true">
+  <div class="profile-popup__inner">
+    <div class="profile-popup__head">
+      <div class="profile-avatar-lg" id="profileAvatarLg"></div>
+      <div class="profile-popup__info">
+        <strong id="profileName">—</strong>
+        <span id="profileEmail" class="profile-email">—</span>
+      </div>
+      <button class="profile-popup__close close" type="button" id="profileClose" aria-label="Закрыть">×</button>
+    </div>
+    <div class="profile-meta">
+      <div class="profile-meta__item">
+        <span class="profile-meta__label" data-i18n="profile.region">Регион</span>
+        <span class="profile-meta__value" id="profileRegion">—</span>
+      </div>
+      <div class="profile-meta__item">
+        <span class="profile-meta__label" data-i18n="profile.uptime">На сайте</span>
+        <span class="profile-meta__value" id="profileUptime">—</span>
+      </div>
+      <div class="profile-meta__item">
+        <span class="profile-meta__label" data-i18n="profile.time">Время</span>
+        <span class="profile-meta__value" id="profileClock">—</span>
+      </div>
+      <div class="profile-meta__item">
+        <span class="profile-meta__label" data-i18n="profile.member">Участник с</span>
+        <span class="profile-meta__value" id="profileSince">—</span>
+      </div>
+    </div>
+    <div class="profile-section-label" data-i18n="profile.language">Язык интерфейса</div>
+    <div class="profile-lang-toggle">
+      <button class="lang-btn" data-lang="ru" type="button">🇷🇺 Русский</button>
+      <button class="lang-btn" data-lang="ua" type="button">🇺🇦 Українська</button>
+    </div>
+    <div class="profile-section-label" data-i18n="profile.regionSelect">Регион / магазины</div>
+    <div class="profile-region-grid">
+      <button class="region-btn" data-region="ua"     type="button">🇺🇦 Україна</button>
+      <button class="region-btn" data-region="ru"     type="button">🇷🇺 Россия</button>
+      <button class="region-btn" data-region="eu"     type="button">🇪🇺 Европа</button>
+      <button class="region-btn" data-region="global" type="button">🌐 Global</button>
+    </div>
+    <div class="profile-popup__foot">
+      <button class="ghost full" id="profileLogout" type="button" data-i18n="nav.logout">↪ Выйти</button>
+    </div>
+  </div>
+</div>
+<div id="profileBackdrop" class="profile-backdrop" hidden></div>
+
+<dialog id="panel" class="panel">
+  <div class="sheet" id="panelSheet"></div>
+</dialog>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<script src="/static/app.js?v=33"></script>
+</body>
+</html>
