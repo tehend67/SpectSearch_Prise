@@ -2,8 +2,6 @@
 
 SpectSearch — это современное веб-приложение для отслеживания цен на товары в различных украинских и российских интернет-магазинах. Отслеживайте изменения цен, настраивайте оповещения и никогда не упускайте выгодные предложения.
 
-![SpectSearch Dashboard](https://via.placeholder.com/800x400/f4f1ed/d97706?text=SpectSearch+Dashboard)
-
 ## ✨ Возможности
 
 - 📊 **Мультимагазинное отслеживание цен** — Мониторинг товаров из украинских (Rozetka, Allo, Comfy, Citrus, Epicentr) и российских (DNS, M.Video, Eldorado, Citilink, Ozon, Wildberries) магазинов
